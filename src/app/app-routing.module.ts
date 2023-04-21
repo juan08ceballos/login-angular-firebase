@@ -3,9 +3,12 @@ import { RouterModule, Routes } from '@angular/router';
 import { LoginComponent } from './components/login/login.component';
 import { MainComponent } from './components/main/main.component';
 import { RegisterComponent } from './components/register/register.component';
+import { canActivate, redirectUnauthorizedTo } from '@angular/fire/auth-guard';
 
 const routes: Routes = [
-  { path: '', pathMatch: 'full', component: MainComponent},
+  { path: '', pathMatch: 'full', redirectTo: '/login'},
+  { path: 'main', component: MainComponent,
+   ...canActivate(()=>redirectUnauthorizedTo(['/login']) )},
   { path: 'register', component: RegisterComponent},
   { path: 'login', component: LoginComponent}
 
